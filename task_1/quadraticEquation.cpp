@@ -1,11 +1,11 @@
 #include "quadraticEquation.h"
 #include <cmath>
 
-QuadraticEquation::QuadraticEquation(double paramA, double paramB, double paramC){
-    A = paramA;
-    B = paramB;
-    C = paramC;
-}
+//QuadraticEquation::QuadraticEquation(double A, double B, double C){
+//    this->A = A;
+//    this->B = B;
+//    this->C = C;
+//}
 
 void::QuadraticEquation::calcDiscriminant(){
     D = B*B - 4*A*C;

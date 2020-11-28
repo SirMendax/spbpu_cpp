@@ -1,0 +1,77 @@
+Область кода за двоеточием и до начала тела конструктора называется инициализатором конструктора.
+
+class foo
+{
+public:
+   foo(int a) : a(a) {}
+   // эквивалентно foo(int a) { this->a = a; }
+private:
+   int a;
+}
+
+
+class TestClass
+{
+private:
+  int *data;
+public:
+  TestClass(int size){
+    this->data = new int[size];
+    for(int i = 0; i < size; i++){
+      data[i] = i;
+    }
+    cout << "Constructor " << this << endl;
+  }
+  ~TestClass(){
+    cout << "Destructor " << this << endl;
+    delete[] data;
+  }
+}
+
+
+//При передаче по значению создается копия объекта класса TestClass.
+void Foo(TestClass value)
+{
+
+}
+
+
+int main()
+{
+  //Выполняется побитовое копирование. Деструктор сработает два раза. То есть, будет выполнена попытка дважды освободить одну и ту же область памяти
+  //при delete[] data; Программа выкинет эксепшен.
+  //Чтобы избежать такой ошибки, нужен конструктор копирования.
+  TestClass a(1);
+  TestClass b(a);
+
+  return 0;
+}
+
+//Конструктор копирования
+class TestClass
+{
+private:
+  int *data;
+public:
+  TestClass(int size){
+    this->size = size;
+    this->data = new int[size];
+    for(int i = 0; i < size; i++){
+      data[i] = i;
+    }
+    cout << "Constructor " << this << endl;
+  }
+
+  TestClass(const TestClass &other){
+    this->data = new int[other.size];
+    for(int i = 0; i < other.size; i++){
+      this->data[i] = other.data[i];
+    }
+    cout << "Copy constructor " << this << endl;
+  }
+
+  ~TestClass(){
+    cout << "Destructor " << this << endl;
+    delete[] data;
+  }
+}
