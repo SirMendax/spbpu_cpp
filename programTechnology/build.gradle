@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+mainClassName = 'dev.arven.progTech.Application'
+
+jar {
+  manifest {
+    attributes "Main-Class": "$mainClassName"
+  }
+  zip64 = true
+  from {
+    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+  compile 'com.massisframework:j-text-utils:0.3.4'
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
